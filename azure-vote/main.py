@@ -9,8 +9,7 @@ from datetime import datetime
 
 # App Insights
 # TODO: Import required libraries for App Insights
-from opencensus.ext.azure.log_exporter import AzureLogHandler
-from opencensus.ext.azure.log_exporter import AzureEventHandler
+from opencensus.ext.azure.log_exporter import AzureLogHandler, AzureEventHandler
 from opencensus.ext.azure import metrics_exporter
 from opencensus.stats import aggregation as aggregation_module
 from opencensus.stats import measure as measure_module
@@ -37,10 +36,10 @@ exporter = metrics_exporter.new_metrics_exporter(
 # Tracing
 # TODO: Setup tracer
 tracer = Tracer(
-    exporter=AzureExporter(
-        connection_string='InstrumentationKey=972b2d6a-d24d-410d-92df-5ed85248e6b1'), 
-        sampler=ProbabilitySampler(1.0),
+    exporter=AzureExporter(connection_string='InstrumentationKey=972b2d6a-d24d-410d-92df-5ed85248e6b1'), 
+    sampler=ProbabilitySampler(1.0),
 )
+
 app = Flask(__name__)
 
 # Requests
@@ -88,11 +87,11 @@ def index():
         # Get current values
         vote1 = r.get(button1).decode('utf-8')
         # TODO: use tracer object to trace cat vote
-        tracer.span(name="Cats Vote")
+        tracer.span(name="Total {} Voted: {}".format(button1, vote1))
 
         vote2 = r.get(button2).decode('utf-8')
         # TODO: use tracer object to trace dog vote
-        tracer.span(name="Dogs Vote")
+        tracer.span(name="Total {} Voted: {}".format(button2, vote2))
 
         # Return index with values
         return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
