@@ -24,19 +24,19 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 # Logging
 logger = logging.getLogger(__name__)  # TODO: Setup logger
-logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=972b2d6a-d24d-410d-92df-5ed85248e6b1'))
-logger.addHandler(AzureEventHandler(connection_string='InstrumentationKey=972b2d6a-d24d-410d-92df-5ed85248e6b1'))
+logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=a5970318-7e08-4364-859b-8bfcb69d630f'))
+logger.addHandler(AzureEventHandler(connection_string='InstrumentationKey=a5970318-7e08-4364-859b-8bfcb69d630f'))
 
 # Metrics
 # TODO: Setup exporter
 exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True, 
-    connection_string='InstrumentationKey=972b2d6a-d24d-410d-92df-5ed85248e6b1')
+    connection_string='InstrumentationKey=a5970318-7e08-4364-859b-8bfcb69d630f')
 
 # Tracing
 # TODO: Setup tracer
 tracer = Tracer(
-    exporter=AzureExporter(connection_string='InstrumentationKey=972b2d6a-d24d-410d-92df-5ed85248e6b1'), 
+    exporter=AzureExporter(connection_string='InstrumentationKey=a5970318-7e08-4364-859b-8bfcb69d630f'), 
     sampler=ProbabilitySampler(1.0),
 )
 
@@ -46,7 +46,7 @@ app = Flask(__name__)
 # TODO: Setup flask middleware
 middleware = FlaskMiddleware(
     app, 
-    exporter=AzureExporter(connection_string="InstrumentationKey=972b2d6a-d24d-410d-92df-5ed85248e6b1"), 
+    exporter=AzureExporter(connection_string="InstrumentationKey=a5970318-7e08-4364-859b-8bfcb69d630f"), 
     sampler=ProbabilitySampler(rate=1.0),
 )
 
